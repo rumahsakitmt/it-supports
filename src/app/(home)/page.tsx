@@ -1,4 +1,4 @@
-import SearchBar from "@/components/searchbar";
+import SearchBar from "@/components/Searchbar";
 import Typewriter from "@/fancy/components/text/typewriter";
 
 export default function Home() {

@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 
-export default function SearchBar() {
+export default function Search() {
   const searchParams = useSearchParams();
   const ref = useRef<HTMLInputElement | null>(null)
   const [searchTerm, setSearchTerm] = useState(searchParams.get("q") ?? "")

@@ -8,7 +8,8 @@ interface PageProps {
 }
 export default async function SearchPage({ searchParams
 }: PageProps) {
-  const query = await searchParams.q || ''
+
+  const query = await searchParams;
 
   const searchPosts = (posts: any[], query: string) => {
     if (!query && query.length > 0) return [];
@@ -23,7 +24,7 @@ export default async function SearchPage({ searchParams
     });
   };
 
-  const posts = searchPosts(getBlogPosts(), query?.toString() || "");
+  const posts = searchPosts(getBlogPosts(), query.q?.toString() || "");
 
   return (
     <div className="mt-24">

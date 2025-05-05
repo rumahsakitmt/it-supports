@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
-import SearchBar from "./searchbar"
 import Link from "next/link";
+import SearchBar from "./Searchbar";
 
 export default function Navigation() {
   const pathname = usePathname()
