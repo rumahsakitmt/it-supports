@@ -7,14 +7,24 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function SearchBar() {
   const searchParams = useSearchParams();
-  const ref = useRef(null)
+  const ref = useRef<HTMLInputElement | null>(null)
   const [searchTerm, setSearchTerm] = useState(searchParams.get("q") ?? "")
-  const router = useRouter()
   const pathname = usePathname()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (pathname === '/search' && ref.current) {
+      ref.current.focus()
+    }
+
+  }, [pathname])
 
 
   useEffect(() => {
-    if (searchTerm) {
+    const currentParams = searchParams.get("q") ?? ""
+
+    const qChanged = currentParams !== searchTerm
+    if (qChanged) {
       router.push("/search?" + createQueryString("q", searchTerm));
     }
   }, [searchTerm])
@@ -28,7 +38,7 @@ export default function SearchBar() {
 
 
   return (
-    <Input value={searchTerm} onChange={(e) => {
+    <Input ref={ref} value={searchTerm} onChange={(e) => {
       setSearchTerm(e.target.value);
     }} className="placeholder:italic w-full" placeholder="Cari" />
   )
