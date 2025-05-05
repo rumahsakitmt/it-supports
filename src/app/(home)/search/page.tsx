@@ -2,13 +2,13 @@ import Link from "next/link";
 import { getBlogPosts } from "../blog/utils"
 
 interface PageProps {
-  searchParams: {
+  searchParams: Promise<{
     [key: string]: string | string[] | undefined
-  }
+  }>
 }
 export default async function SearchPage({ searchParams
 }: PageProps) {
-  const query = searchParams.q || ''
+  const query = await searchParams.q || ''
 
   const searchPosts = (posts: any[], query: string) => {
     if (!query && query.length > 0) return [];
