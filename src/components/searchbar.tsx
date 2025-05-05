@@ -1,20 +1,34 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 
 export default function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState("")
+  const searchParams = useSearchParams();
+  const ref = useRef(null)
+  const [searchTerm, setSearchTerm] = useState(searchParams.get("q") ?? "")
   const router = useRouter()
   const pathname = usePathname()
 
+
+  useEffect(() => {
+    if (searchTerm) {
+      router.push("/search?" + createQueryString("q", searchTerm));
+    }
+  }, [searchTerm])
+
+  const createQueryString = useCallback((name: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(name, value);
+
+    return params.toString();
+  }, [searchParams])
+
+
   return (
     <Input value={searchTerm} onChange={(e) => {
-      if (pathname == "/") {
-        router.push("/search");
-      }
       setSearchTerm(e.target.value);
     }} className="placeholder:italic w-full" placeholder="Cari" />
   )
